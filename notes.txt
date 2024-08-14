@@ -1,0 +1,26 @@
+1. Need to set up admin pages for  to all people
+  1.1. viewing all customers and info not to be shown
+  1.2. stock amounts to be hidden if i want (optional)
+  1.3. edit products
+  
+2. set up sign in page.
+3. set up product viewing pages (not for order products)
+4. set up a edit page for customer details
+5. update the way the api handles stock and warnings for low stock
+6. set up reloading of of pages after adding
+7. change customer accounts to allow for addresses and payment info 
+8. details pages for products and customers accounts
+9. add description for the products and possibly images
+
+App.JSX is the parent of all our other pages that is refing when we call that page 
+
+posting from with a class
+      // axios.post('http://127.0.0.1:5000/customers', customerData)
+      //   .then(response => {
+      //     console.log("good post", response.data)
+      //   // handle successful submission/ clearing form showing message to user
+      //   })
+      //   .catch(error => {
+      //     console.log("bad post", response.data)
+      //     // handle any errors here/ show message to user
+      //   })
