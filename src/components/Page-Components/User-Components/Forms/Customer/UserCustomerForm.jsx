@@ -4,9 +4,8 @@ import { Form, Button, Alert, Modal, Spinner, Container } from "react-bootstrap"
 import { object,func } from "prop-types";
 import axios from "axios";
 
-const UserCustomerAccountForm = () => {
-  const [customerAccount, setCustomerAccount] = useState({username:'', password:'', customer_id: ''});
-  const [customers, setCustomers] = useState([]);
+const UserCustomerForm = () => {
+  const [customer, setCustomer] = useState({name:'', email:'', phone: ''});
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -16,9 +15,9 @@ const UserCustomerAccountForm = () => {
 
   useEffect(() => {
     if (id) {
-       axios.get(`http://127.0.0.1:5000/customer_accounts/${id}`)
+      axios.get(`http://127.0.0.1:5000/customers/${id}`)
       .then(response => {
-        setCustomerAccount(response.data);
+        setCustomer(response.data);
       })
       .catch (error => setErrorMessage(error.message))
     }
@@ -26,9 +25,9 @@ const UserCustomerAccountForm = () => {
 
   const validateForm = () => {
     let errors = {};
-    if (!customerAccount.username) errors.username = 'Username is required';
-    if (!customerAccount.password) errors.password = 'Password is required';
-    if (!customerAccount.customer_id) errors.customer_id = 'Customer ID is required';
+    if (!customer.name) errors.name = 'Name is required';
+    if (!customer.email) errors.email = 'Email is required';
+    if (!customer.phone) errors.phone = 'Phone is required';
     setErrors(errors)
     return Object.keys(errors).length === 0;
   };
@@ -39,9 +38,9 @@ const UserCustomerAccountForm = () => {
     setSubmitting(true);
       try {
         if(id){
-          await axios.put(`http://127.0.0.1:5000/customer_accounts/${id}`, customerAccount);
+          await axios.put(`http://127.0.0.1:5000/customers/${id}`, customer);
         } else {
-          await axios.post('http://127.0.0.1:5000/customer_accounts',customerAccount);
+          await axios.post('http://127.0.0.1:5000/customers',customer);
         }
         setShowSuccessModal(true);
       } catch(error){
@@ -53,16 +52,16 @@ const UserCustomerAccountForm = () => {
 
   const handleChange = (event) => {
     const {name, value} = event.target;
-    setCustomerAccount(prevCustomerAccount => ({
-      ...prevCustomerAccount, [name]: value
+    setCustomer(prevCustomer => ({
+      ...prevCustomer, [name]: value
     }));
   };
 
   const handleClose = () => {
     setShowSuccessModal(false);
-    setCustomer({username: '', password: '', customer_id: ''});
+    setCustomer({name: '', email: '', phone: ''});
     setSubmitting(false);
-    navigate('/customer-accounts'); 
+    navigate('/customers'); 
   }
 
   if(submitting) return <p>Submitting Customer data...</p>;
@@ -70,50 +69,50 @@ const UserCustomerAccountForm = () => {
   return (
     <Container>
 
-      <Form onSubmit={handleSubmit} id="add-customer-account-form">
+      <Form onSubmit={handleSubmit} id="add-customer-form">
 
       <h3>{id ? 'Edit:': 'Add:'}</h3>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-        <Form.Group controlId="accountUserName">
-          <Form.Label>Username:</Form.Label>
+        <Form.Group controlId="customerName">
+          <Form.Label>Name:</Form.Label>
           <Form.Control 
           type="text"
-          name="username"
-          value={customerAccount.username}
+          name="name"
+          value={customer.name}
           onChange={handleChange}
-          isInvalid={!!errors.username}
+          isInvalid={!!errors.name}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.username}
+            {errors.name}
           </Form.Control.Feedback>
         </Form.Group>  
 
-        <Form.Group controlId="accountPassword">
-          <Form.Label>Password:</Form.Label>
+        <Form.Group controlId="customerEmail">
+          <Form.Label>Email:</Form.Label>
           <Form.Control 
-          type="text"
-          name="password"
-          value={customerAccount.password}
+          type="email"
+          name="email"
+          value={customer.email}
           onChange={handleChange}
-          isInvalid={!!errors.password}
+          isInvalid={!!errors.email}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.password}
+            {errors.email}
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group controlId="accountCustomerId">
-          <Form.Label>Customer ID:</Form.Label>
+        <Form.Group controlId="customerPhone">
+          <Form.Label>Phone Number:</Form.Label>
           <Form.Control 
-          type="number"
-          name="customer_id"
-          value={customerAccount.customer_id}
+          type="tel"
+          name="phone"
+          value={customer.phone}
           onChange={handleChange}
-          isInvalid={!!errors.customer_id}
+          isInvalid={!!errors.phone}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.customer_id}
+            {errors.phone}
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -132,7 +131,7 @@ const UserCustomerAccountForm = () => {
         </Modal.Header>
 
         <Modal.Body>
-          Customer Account has been successfully {id ? 'updated': 'added'}
+          Customer has been successfully {id ? 'updated': 'added'}
         </Modal.Body>
 
         <Modal.Footer>
@@ -146,9 +145,9 @@ const UserCustomerAccountForm = () => {
 
 };
 
-UserCustomerAccountForm.propTypes = {
-  selectedCustomerAccount: object,
-  onCustomerAccountUpdated: func
+UserCustomerForm.propTypes = {
+  selectedCustomer: object,
+  onCustomerUpdated: func
 }
 
-export default UserCustomerAccountForm;
+export default UserCustomerForm;

@@ -2,9 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import { array,object } from 'prop-types';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const CustomerProductList = ({products}) => {
+  // const [searchParams, setSearchParams] = useSearchParams({n:''});
   const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const id = useParams();

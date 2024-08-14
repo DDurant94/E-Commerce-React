@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import ProductDetails from "../../Admin/Details/Product/ProductDetails";
+import ProductDetails from "../../Details/Product/ProductDetails";
 
 
 function ProductWrapper(){

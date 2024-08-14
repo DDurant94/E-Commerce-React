@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import AccountDetails from "../../Admin/Details/Account/AccountDetails";
+import AccountDetails from '../../Details/Account/AccountDetails'
 
 function CustomerAccountWrapper(){
   let params = useParams();

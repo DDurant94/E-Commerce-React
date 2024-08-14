@@ -56,7 +56,7 @@ const SignIn = () => {
     setShowSuccessModal(false);
     setAccountForm({username: '', password:''});
     setSubmitting(false);
-    navigate(`/home/${account.customer_id}`); 
+    navigate(`/${account.customer_id}`); 
   };
 
 
