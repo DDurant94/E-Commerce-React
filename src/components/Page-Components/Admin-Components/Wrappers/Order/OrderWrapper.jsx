@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import OrderDetails from "../../Details/Orders/OrderDetails";
+import OrderDetails from "../../Admin/Details/Orders/OrderDetails";
 
 function OrderWrapper(){
   let params = useParams();

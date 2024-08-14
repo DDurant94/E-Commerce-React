@@ -24,7 +24,7 @@ unique identifier (ID).
 Product Catalog:  DONE
 Create React components and functionality for managing Products:
 
-List Products: 
+List Products: DONE
 Create a component to display a list of all available products in the e-commerce platform, providing essential product information.
 
 Create Product Form: DONE
