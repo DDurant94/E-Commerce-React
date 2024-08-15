@@ -39,6 +39,7 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (event) => {
+    console.log(1)
     fetchingAccount();
     event.preventDefault();
     if (!validateForm()) return;

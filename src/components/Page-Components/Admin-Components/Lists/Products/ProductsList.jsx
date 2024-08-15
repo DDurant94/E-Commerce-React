@@ -47,8 +47,10 @@ const ProductList = ({products}) => {
             {products.map(product => (
               <ListGroupItem key={product.id} className="d-flex justify-content-between align-items-center">
                 {product.name} (ID: {product.id}) <br />
-                <Button variant="primary" onClick={() => navigate(`/product-details/${product.id}`)} className="me-2">Details</Button>
+                
                 <div>
+                  
+                  <Button variant="primary" onClick={() => navigate(`/product-details/${product.id}`)} className="me-2">Details</Button>
                   <Button variant="warning" onClick={() => navigate(`/product-form/${product.id}`)} className="me-2">Edit</Button>
                   <Button variant="danger" onClick={() => deleteProduct(product.id)}>Delete</Button>
                 </div>
