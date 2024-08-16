@@ -1,4 +1,4 @@
-import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
+import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal,Form} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,9 +7,11 @@ import { object } from "prop-types";
 const CartDetails = ({params}) => {
   const [customer, setCustomer] = useState([]);
   const [cart, setCart] = useState([]);
+  const [customerId, setCustomerId] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessModalOrder, setShowSuccessModalOrder] = useState(false);
   const navigate = useNavigate();
-  const [orderCart,setOrderCart] = useState({})
 
 
   useEffect(()=>{
@@ -27,7 +29,7 @@ const CartDetails = ({params}) => {
       }
     };
     fetchCustomerCart();
-  },[params || deleteCart])
+  },[params])
 
   const deleteCart = async (id) => {
     try{
@@ -40,25 +42,63 @@ const CartDetails = ({params}) => {
 
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const orderData = {
+      customer_id: params.id,
+      products: cart.map(items => (items.items.map(item => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+      })))),
+    };
+    console.log(orderData)
+    try{
+      const loopingCartProducts = async (order) => {
+        for(let products of order.products){
+          for(let product of products){
+            try{
+              let response = await axios.get(`http://127.0.0.1:5000/products/${product.product_id}`);
+              let updatedProductData = {name:response.data.name,price:response.data.price,quantity: response.data.quantity - product.quantity,description:response.data.description};
+              console.log(updatedProductData)
+              await axios.put(`http://127.0.0.1:5000/products/${product.product_id}`,updatedProductData)
+            } catch(error){
+              console.error("Error updating products",error)
+            }
+          }
+        };
+        // for(let cartsInf of cart){
+        //   try{
+        //   await axios.delete(`http://127.0.0.1:5000/cart/${cartsInf.cart_id}`);
+        // }catch(error){
+        //   console.error("Error deleting carts",error)
+        // }};
+    };
+    loopingCartProducts(orderData);
+    await axios.post(`http://127.0.0.1:5000/orders`,orderData);
+    setShowSuccessModalOrder(true);
+    }catch(error){
+      console.error("error posting order",error)
+    }
+  };
+
   const handleClose = () => {
     setShowSuccessModal(false);
     navigate('/carts');
   };
 
-  const submitOrder = async () =>{
-    let customerId = cart.customer_id;
-    let products = cart.items;
-    setOrderCart({customer_id:customerId,products:products});
-    console.log(orderCart)
-
-  }
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setCustomerId(prevCustomer => ({
+      ...prevCustomer, [name]: value
+    }));
+  };
 
   const total = (cart) => {
     let cost = 0;
     cart.map(info => info.items.map(price => cost+=(price.price*price.quantity)))
     return cost
   };
-  console.log(cart)
+
   return (
     <Container>
       <Col>
@@ -92,13 +132,41 @@ const CartDetails = ({params}) => {
                 Subtotal: ${total(cart).toFixed(2)} <br />
                 <div>
                   <Button variant="primary" onClick={() => navigate(`/carts`)} className="me-2">Carts</Button>
-                  <Button variant="danger" onClick={()=> submitOrder()} className="me-2">Check out</Button>
                   <Button variant="warning" className="me-2">Edit</Button>
                 </div>
               </ListGroup>
 
             </ListGroupItem>
           </ListGroup>
+        </Row>
+
+        <Row>
+
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label><h4>Customer ID:</h4></Form.Label>
+            <Form.Control
+              type="number"
+              name="customerId"
+              value={customer.id}
+              disabled
+              onChange={handleChange}
+             />
+          </Form.Group>
+          <div>
+            <h4>Cart Items</h4>
+            <ListGroup>
+            {cart.map((items => (items.items.map((item,index) => 
+              <ListGroupItem key={index}>
+                {item.name} (Quantity: {item.quantity})
+              </ListGroupItem>
+            ))))}
+            </ListGroup>
+          </div>
+          <Button variant="danger" type="submit" className="me-2" disabled={submitting}>
+          {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Check Out'}
+          </Button>
+        </Form>
         </Row>
       </Col>
 
@@ -112,6 +180,24 @@ const CartDetails = ({params}) => {
 
       <Modal.Body>
         Cart has been successfully deleted.
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="primary" onClick={handleClose}>Close</Button>
+      </Modal.Footer>
+
+      </Modal>
+
+      <Modal show={showSuccessModalOrder} onHide={handleClose}>
+
+      <Modal.Header closeButton>
+        <Modal.Title>
+          Success
+        </Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        {customer.name} your order has been places.
       </Modal.Body>
 
       <Modal.Footer>
