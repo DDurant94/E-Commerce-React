@@ -5,7 +5,7 @@
 // import axios from "axios";
 
 // const OrderForm = () => {
-//   const [order, setOrder] = useState([]);
+//   const [order, setOrder] = useState({customer_id:'',products:[{product_id:'',quantity:''}]});
 //   const [errors, setErrors] = useState({});
 //   const [submitting, setSubmitting] = useState(false);
 //   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -50,8 +50,8 @@
 //       }
 //   };
 
-//   const handleChange = (event) => {
-//     // const {product.name, value} = event.target;
+//   const handleChange = (index,event) => {
+//     const {name, value} = event.target;
 //     setOrder(prevOrder => ({
 //       ...prevOrder, [product.name]: value
 //     }));
@@ -75,10 +75,10 @@
 //       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 //       {order.map(item => {})}
 //         <Form.Group controlId="">
-//           <Form.Label>:</Form.Label>
+//           <Form.Label>Customer ID:</Form.Label>
 //           <Form.Control 
-//           type="text"
-//           name=""
+//           type="number"
+//           name="customer_id"
 //           value={}
 //           onChange={handleChange}
 //           isInvalid={!!errors.}

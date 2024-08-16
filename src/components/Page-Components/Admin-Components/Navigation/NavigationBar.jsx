@@ -33,7 +33,7 @@ function NavigationBar(){
 
             <Nav.Link to='orders' className="nav-link px-2 rounded" id="nav-links" as={Link} activeclassname="active">Orders</Nav.Link>
 
-            <Nav.Link to='cart' className="nav-link px-2 rounded" id="nav-links" as={Link} activeclassname="active">Carts</Nav.Link>
+            <Nav.Link to='carts' className="nav-link px-2 rounded" id="nav-links" as={Link} activeclassname="active">Carts</Nav.Link>
 
             <Nav.Link to="sign-in" className="nav-link px-2 rounded" id="nav-links" as={Link} activeclassname="active">Sign In</Nav.Link>
             

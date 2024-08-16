@@ -12,6 +12,8 @@ import CustomerAccountForm from './components/Page-Components/Admin-Components/F
 import CustomerAccountWrapper from './components/Page-Components/Admin-Components/Wrappers/Account/AccountWrapper';
 import OrdersList from './components/Page-Components/Admin-Components/Lists/Orders/OrdersList';
 import OrderWrapper from './components/Page-Components/Admin-Components/Wrappers/Order/OrderWrapper';
+import CartsList from './components/Page-Components/Admin-Components/Lists/Carts/CartsList'
+import CartWrapper from './components/Page-Components/Admin-Components/Wrappers/cart/CartWrapper';
 import SignIn from './components/Page-Components/SignInForm'
 import NotFound from './components/Page-Components/ErrorPage'
 
@@ -42,7 +44,7 @@ const App = () => {
       const responseProducts = await axios.get('http://127.0.0.1:5000/products');
       setProducts(responseProducts.data);
     } catch(error){
-      console.error('Error fetching products:', error)
+      console.error('Error fetching products:', error);
     }
   };
 
@@ -51,7 +53,7 @@ const App = () => {
       const responseCustomers = await axios.get('http://127.0.0.1:5000/customers');
       setCustomers(responseCustomers.data);
     } catch(error){
-      console.error('Error fetching customers:', error)
+      console.error('Error fetching customers:', error);
     }
 
   };
@@ -61,7 +63,7 @@ const App = () => {
       const responseOrders = await axios.get('http://127.0.0.1:5000/orders');
       setOrders(responseOrders.data);
     }catch (error){
-      console.log("Error fetching orders:", error)
+      console.error("Error fetching orders:", error);
     }
   };
 
@@ -70,9 +72,11 @@ const App = () => {
       const responseCustomersAccount = await axios.get('http://127.0.0.1:5000/customer_accounts');
       setAccounts(responseCustomersAccount.data);
     }catch (error){
-      console.log("Error fetching orders:", error)
+      console.error("Error fetching orders:", error);
     }
   };
+
+
 
   return (
     <div id="app-container"  data-bs-theme="light" className='text-black'>
@@ -93,6 +97,8 @@ const App = () => {
       <Route path="/customer-account-details/:id" element={<CustomerAccountWrapper/>}/>
       <Route path="/orders" element={<OrdersList orders={orders}/>}/>
       <Route path="/order-details/:id" element={<OrderWrapper/>}/>
+      <Route path="/carts" element={<CartsList/>}/>
+      <Route path="/cart-details/:id" element={<CartWrapper/>}/>
       <Route path="/sign-in" element={<SignIn />}/>
       <Route path="*" element={<NotFound />}/>
     </Routes>

@@ -1,4 +1,4 @@
-import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal, Form} from "react-bootstrap";
+import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal, Form,Spinner} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -6,8 +6,9 @@ import { object,func } from "prop-types";
 
 const ProductDetails = ({params}) => {
   const [product, setProduct] = useState([]);
-  const [cart,setCart] = useState({customer_id:'',items:[]})
-  const [formData, setFormData] = useState({});
+  const [cart,setCart] = useState({customer_id:'',items:[]});
+  const [customersCart,setCustomersCart] = useState([]);
+  const [formData, setFormData] = useState({customer_id:"",quantity:""});
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -16,15 +17,7 @@ const ProductDetails = ({params}) => {
   const id = useParams();
 
   const addProduct = async (productToAdd) => {
-      setCart({customer_id:(productToAdd.customer_id),items:[...cart.items,
-        {product_id:(id.id), quantity:(productToAdd.quantity)}
-      ]});
-      try{
-        await axios.post(`http://127.0.0.1:5000/cart`,cart);
-      setShowSuccessModal(true);
-      }catch (error){
-        console.error('error pushing to cart', error)
-      }
+    setCart({customer_id:(productToAdd.customer_id),items:[{product_id:(id.id), quantity:(productToAdd.quantity)}]});
   };
 
   const validateForm = () => {
@@ -37,10 +30,12 @@ const ProductDetails = ({params}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    addProduct(formData);
     if (!validateForm()) return;
     setSubmitting(true);
       try {
-        addProduct(formData);
+        await axios.post(`http://127.0.0.1:5000/cart`,cart);
+        setShowSuccessModal(true);
       } catch(error){
         setErrorMessage(error.message);
       } finally{
@@ -67,6 +62,8 @@ const ProductDetails = ({params}) => {
       try{
         if(id){
           const response = await axios.get(`http://127.0.0.1:5000/products/${id}`)
+          const responseCustomersCart = await axios.get(`http://127.0.0.1:5000/carts_by_customer`);
+          setCustomersCart(responseCustomersCart.data);
           setProduct(response.data);
         }
       } catch(error){
@@ -75,8 +72,6 @@ const ProductDetails = ({params}) => {
     }
     fetchProduct()
   },[params]);
-
-  console.log(cart)
   return (
     <Container>
       <Row>

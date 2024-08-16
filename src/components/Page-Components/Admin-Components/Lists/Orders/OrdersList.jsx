@@ -8,6 +8,7 @@ const OrdersList = ({orders}) => {
   const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+
   const deleteOrder = async (id) => {
     try{
       await axios.delete(`http://127.0.0.1:5000/orders/${id}`);
@@ -34,8 +35,6 @@ const OrdersList = ({orders}) => {
     };
     fetchOrders()
   },[deleteOrder])
-
-  console.log(orders)
 
   return (
 
