@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
-import { array } from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
-const ProductList = ({products}) => {
+const ProductList = () => {
   const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [products,setProducts]= useState([]);
 
   const deleteProduct = async (id) => {
     try{
@@ -21,46 +21,52 @@ const ProductList = ({products}) => {
   const handleClose = () => {
     setShowSuccessModal(false);
     navigate('/products');
-  }
+  };
 
   useEffect(()=> {
     const fetchProducts = async () => {
       try{
         const responseProducts = await axios.get('http://127.0.0.1:5000/products');
-        products = [responseProducts.data];
+        setProducts(responseProducts.data);
       } catch(error){
         console.error('Error fetching products:', error)
       }
     };
     fetchProducts()
-  },[deleteProduct])
+  },[deleteProduct]);
 
   return (
+    <>
 
-    <Container>
+      <Col className="m-2  p-3 rounded">
 
-      <Row>
-
-        <Col>
+        <Row className="bg-info p-3 rounded">
           <h3>Products:</h3>
-          <ListGroup>
+          <ListGroup className=" bg-primary my-3 p-2">
             {products.map(product => (
-              <ListGroupItem key={product.id} className="d-flex justify-content-between align-items-center">
+              <ListGroupItem key={product.id} className="d-flex justify-content-between align-items-center my-1 rounded p-3">
                 {product.name} (ID: {product.id}) <br />
                 
-                <div>
-                  
-                  <Button variant="primary" onClick={() => navigate(`/product-details/${product.id}`)} className="me-2">Details</Button>
-                  <Button variant="warning" onClick={() => navigate(`/product-form/${product.id}`)} className="me-2">Edit</Button>
-                  <Button variant="danger" onClick={() => deleteProduct(product.id)}>Delete</Button>
+                <div className="my-2">
+                  <Col>
+                    <Row className="m-2">
+                      <Button variant="primary" onClick={() => navigate(`/product-details/${product.id}`)} className="me-2">Details</Button>
+                    </Row>
+                    <Row className="m-2">
+                      <Button variant="warning" onClick={() => navigate(`/product-form/${product.id}`)} className="me-2">Edit</Button>
+                    </Row>
+                    <Row className="m-2">
+                      <Button variant="danger" onClick={() => deleteProduct(product.id)} className="me-2">Delete</Button>
+                    </Row>
+                  </Col>
                 </div>
               </ListGroupItem> ))}
 
           </ListGroup>
 
-        </Col>
+        </Row>
 
-      </Row>
+      </Col>
 
       <Modal show={showSuccessModal} onHide={handleClose}>
 
@@ -80,12 +86,8 @@ const ProductList = ({products}) => {
 
       </Modal>
 
-    </Container>
+    </>
   );
 };
-
-ProductList.propTypes = {
-  products: array
-}
 
 export default ProductList;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, Button, Alert, Modal, Spinner, Container } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner, Col, Row } from "react-bootstrap";
 import { object,func } from "prop-types";
 import axios from "axios";
 
@@ -67,61 +67,69 @@ const AddCustomerForm = () => {
   if(submitting) return <p>Submitting Customer data...</p>;
 
   return (
-    <Container>
+    <>
+      <Col className="bg-info p-3 rounded m-3">
+        <Row className="m-2">
+          <Form onSubmit={handleSubmit} id="add-customer-form" className="bg-primary p-3 rounded">
 
-      <Form onSubmit={handleSubmit} id="add-customer-form">
+          <h3 className="mt-3">{id ? 'Edit Customer:': 'Add Customer:'}</h3>
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+          <Col className="p-3 bg-dark rounded text-light">
+            <Row className="p-1 m-1">
+              <Form.Group controlId="customerName" className="p-3">
+                <Form.Label>Name:</Form.Label>
+                <Form.Control 
+                type="text"
+                name="name"
+                value={customer.name}
+                onChange={handleChange}
+                isInvalid={!!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>  
+            </Row>
+            <Row className="p-1 m-1">
+              <Form.Group controlId="customerEmail" className="p-3">
+                <Form.Label>Email:</Form.Label>
+                <Form.Control 
+                type="email"
+                name="email"
+                value={customer.email}
+                onChange={handleChange}
+                isInvalid={!!errors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+            <Row className="p-1 m-1">
+              <Form.Group controlId="customerPhone" className="p-3">
+                <Form.Label>Phone Number:</Form.Label>
+                <Form.Control 
+                type="tel"
+                name="phone"
+                value={customer.phone}
+                onChange={handleChange}
+                isInvalid={!!errors.phone}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+          </Col>
+            <div className="mt-3">
+            <Button variant="danger" type="submit" disabled={submitting}>
+              {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
+            </Button>
+            </div>
 
-      <h3>{id ? 'Edit:': 'Add:'}</h3>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
-        <Form.Group controlId="customerName">
-          <Form.Label>Name:</Form.Label>
-          <Form.Control 
-          type="text"
-          name="name"
-          value={customer.name}
-          onChange={handleChange}
-          isInvalid={!!errors.name}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.name}
-          </Form.Control.Feedback>
-        </Form.Group>  
-
-        <Form.Group controlId="customerEmail">
-          <Form.Label>Email:</Form.Label>
-          <Form.Control 
-          type="email"
-          name="email"
-          value={customer.email}
-          onChange={handleChange}
-          isInvalid={!!errors.email}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.email}
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group controlId="customerPhone">
-          <Form.Label>Phone Number:</Form.Label>
-          <Form.Control 
-          type="tel"
-          name="phone"
-          value={customer.phone}
-          onChange={handleChange}
-          isInvalid={!!errors.phone}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.phone}
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <Button variant="primary" type="submit" disabled={submitting}>
-          {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
-        </Button>
-
-      </Form>
-
+          </Form>
+        </Row>
+      </Col>
       <Modal show={showSuccessModal} onHide={handleClose}>
 
         <Modal.Header closeButton>
@@ -140,7 +148,7 @@ const AddCustomerForm = () => {
 
       </Modal>
 
-    </Container>
+    </>
   );
 
 };

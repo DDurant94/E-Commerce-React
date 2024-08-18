@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, Button, Alert, Modal, Spinner, Container } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner, Col, Row} from "react-bootstrap";
 import { object,func } from "prop-types";
 import axios from "axios";
 
@@ -69,77 +69,94 @@ const ProductForm = () => {
 
   return (
 
-  <Container>
+  <>
+  <Col className="bg-info p-3 rounded m-3">
 
-    <Form onSubmit={handleSubmit} id="add-product-form">
+      <Form onSubmit={handleSubmit} id="add-product-form" className="bg-primary m-2 p-3 rounded">
 
-      <h3>{id ? 'Edit:': 'Add:'}</h3>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        <h3 className="mt-3">{id ? 'Edit Product:': 'Add Product:'}</h3>
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-      <Form.Group controlId="productName">
-        <Form.Label>Name:</Form.Label>
-        <Form.Control 
-        type="text"
-        name="name"
-        value={product.name}
-        onChange={handleChange}
-        isInvalid={!!errors.name}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.name}
-        </Form.Control.Feedback>
-      </Form.Group>  
+        <Col className="p-3 bg-dark rounded text-light">
 
-      <Form.Group controlId="productPrice">
-        <Form.Label>Price:</Form.Label>
-        <Form.Control 
-        type="float"
-        name="price"
-        value={product.price}
-        onChange={handleChange}
-        isInvalid={!!errors.price}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.price}
-        </Form.Control.Feedback>
-      </Form.Group>
+          <Row className="p-1 m-1">
+          <Form.Group controlId="productName" className="p-3">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control 
+            type="text"
+            name="name"
+            value={product.name}
+            onChange={handleChange}
+            isInvalid={!!errors.name}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.name}
+            </Form.Control.Feedback>
+          </Form.Group>  
+          </Row>
 
-      <Form.Group controlId="productQuantity">
-        <Form.Label>Quantity:</Form.Label>
-        <Form.Control 
-        type="number"
-        name="quantity"
-        value={product.quantity}
-        onChange={handleChange}
-        isInvalid={!!errors.quantity}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.quantity}
-        </Form.Control.Feedback>
-      </Form.Group>
+          <Row className="p-1 m-1">
+          <Form.Group controlId="productPrice" className="p-3">
+            <Form.Label>Price:</Form.Label>
+            <Form.Control 
+            type="float"
+            name="price"
+            value={product.price}
+            onChange={handleChange}
+            isInvalid={!!errors.price}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.price}
+            </Form.Control.Feedback>
+          </Form.Group>
+          </Row>
 
-      <Form.Group controlId="productDescription">
-        <Form.Label>Description:</Form.Label>
-        <Form.Control 
-        as="textarea"
-        rows={4}
-        type="text"
-        name="description"
-        value={product.description}
-        onChange={handleChange}
-        isInvalid={!!errors.description}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.description}
-        </Form.Control.Feedback>
-      </Form.Group>
+          <Row className="p-1 m-1">
+          <Form.Group controlId="productQuantity" className="p-3">
+            <Form.Label>Quantity:</Form.Label>
+            <Form.Control 
+            type="number"
+            name="quantity"
+            value={product.quantity}
+            onChange={handleChange}
+            isInvalid={!!errors.quantity}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.quantity}
+            </Form.Control.Feedback>
+          </Form.Group>
+          </Row>
 
-        <Button variant="primary" type="submit" disabled={submitting}>
-          {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
-        </Button>
+          <Row className="p-1 m-1">
+          <Form.Group controlId="productDescription" className="p-3">
+            <Form.Label>Description:</Form.Label>
+            <Form.Control 
+            as="textarea"
+            rows={4}
+            type="text"
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            isInvalid={!!errors.description}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.description}
+            </Form.Control.Feedback>
+          </Form.Group>
+          </Row>
 
-    </Form>
+        </Col>
 
+        <div className="mt-3">
+          <Button variant="danger" type="submit" disabled={submitting} className="me-2">
+            {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
+          </Button>
+          <Button variant="warning" onClick={() => navigate(`/products`)} className="me-2">Products</Button>
+        </div>
+
+      </Form>
+
+    </Col>
     <Modal show={showSuccessModal} onHide={handleClose}>
 
       <Modal.Header closeButton>
@@ -158,7 +175,7 @@ const ProductForm = () => {
 
     </Modal>
 
-  </Container>
+  </>
   );
 }
 

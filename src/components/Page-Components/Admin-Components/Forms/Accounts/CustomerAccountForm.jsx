@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, Button, Alert, Modal, Spinner, Container } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner, Col, Row } from "react-bootstrap";
 import { object,func } from "prop-types";
 import axios from "axios";
 
@@ -68,61 +68,74 @@ const CustomerAccountForm = () => {
   if(submitting) return <p>Submitting Customer data...</p>;
 
   return (
-    <Container>
+    <>
+      <Col className="bg-info p-3 rounded m-3">
+        <Row className="bg-primary m-2 p-3 rounded">
+          <Form onSubmit={handleSubmit} id="add-customer-account-form" >
 
-      <Form onSubmit={handleSubmit} id="add-customer-account-form">
+          <h3 className="mt-3">{id ? 'Edit Account:': 'Create Account:'}</h3>
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-      <h3>{id ? 'Edit:': 'Add:'}</h3>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+          <Col className="p-3 bg-dark rounded text-light">
+            <Row className="p-1 m-1">
+              <Form.Group controlId="accountUserName" className="p-3">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control 
+                type="text"
+                name="username"
+                value={customerAccount.username}
+                onChange={handleChange}
+                isInvalid={!!errors.username}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.username}
+                </Form.Control.Feedback>
+              </Form.Group>  
+            </Row>
 
-        <Form.Group controlId="accountUserName">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control 
-          type="text"
-          name="username"
-          value={customerAccount.username}
-          onChange={handleChange}
-          isInvalid={!!errors.username}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.username}
-          </Form.Control.Feedback>
-        </Form.Group>  
+            <Row className="p-1 m-1">
+              <Form.Group controlId="accountPassword" className="p-3">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control 
+                type="text"
+                name="password"
+                value={customerAccount.password}
+                onChange={handleChange}
+                isInvalid={!!errors.password}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
 
-        <Form.Group controlId="accountPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control 
-          type="text"
-          name="password"
-          value={customerAccount.password}
-          onChange={handleChange}
-          isInvalid={!!errors.password}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.password}
-          </Form.Control.Feedback>
-        </Form.Group>
+            <Row className="p-1 m-1">
+              <Form.Group controlId="accountCustomerId" className="p-3">
+                <Form.Label>Customer ID:</Form.Label>
+                <Form.Control 
+                type="number"
+                name="customer_id"
+                value={customerAccount.customer_id}
+                onChange={handleChange}
+                isInvalid={!!errors.customer_id}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.customer_id}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
 
-        <Form.Group controlId="accountCustomerId">
-          <Form.Label>Customer ID:</Form.Label>
-          <Form.Control 
-          type="number"
-          name="customer_id"
-          value={customerAccount.customer_id}
-          onChange={handleChange}
-          isInvalid={!!errors.customer_id}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.customer_id}
-          </Form.Control.Feedback>
-        </Form.Group>
+          </Col>
 
-        <Button variant="primary" type="submit" disabled={submitting}>
-          {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
-        </Button>
+            <div className="mt-3">
+            <Button variant="danger" type="submit" disabled={submitting}>
+              {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
+            </Button>
+            </div>
 
-      </Form>
-
+          </Form>
+        </Row>
+      </Col>
       <Modal show={showSuccessModal} onHide={handleClose}>
 
         <Modal.Header closeButton>
@@ -141,7 +154,7 @@ const CustomerAccountForm = () => {
 
       </Modal>
 
-    </Container>
+    </>
   );
 
 };

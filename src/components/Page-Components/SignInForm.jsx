@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { object,func } from "prop-types";
-import { Form, Button, Alert, Modal, Spinner, Container } from "react-bootstrap";
+import { useState } from "react";
+import { useNavigate,  } from "react-router-dom";
+import { func } from "prop-types";
+import { Form, Button, Alert, Modal, Spinner, Row, Col } from "react-bootstrap";
 import axios from "axios";
 
 const SignIn = () => {
@@ -12,7 +12,7 @@ const SignIn = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 
   const fetchingAccount = async ()=> {
     try{
@@ -63,57 +63,63 @@ const SignIn = () => {
 
   if(submitting) return <p>Signing In...</p>;
   return (
-    <Container>
+    <>
+      <Col className="m-5 p-5">
+        <Row>
+          <Form onSubmit={handleSubmit} id="signIn-form">
 
-      <Form onSubmit={handleSubmit} id="signIn-form">
+            <h1>Sign-In</h1>
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+            <Col className="border border-primary bg-secondary-subtle text-white p-4 rounded shadow">
+              <Row className="my-3 p-3 border border-primary rounded">
+                <Form.Group controlId="accountUserName">
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control 
+                  type="text"
+                  name="username"
+                  value={accountForm.username}
+                  onChange={handleChange}
+                  isInvalid={!!errors.username}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row className="my-3 p-3 border border-primary rounded">
+                <Form.Group controlId="accountPassword">
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control 
+                  type="text"
+                  name="password"
+                  value={accountForm.password}
+                  onChange={handleChange}
+                  isInvalid={!!errors.password}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row className="my-3 p-3">
+                <div className="mt-3">
+                <Button variant="primary" type="submit" disabled={submitting} className="me-2">
+                  {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
+                </Button>
 
-      <h3>Sign-In</h3>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                <Button variant="secondary" onClick={() => navigate(`/customer-account-form`)} className="me-2">
+                  Create Account
+                </Button>
 
-      <Form.Group controlId="accountUserName">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control 
-          type="text"
-          name="username"
-          value={accountForm.username}
-          onChange={handleChange}
-          isInvalid={!!errors.username}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.username}
-          </Form.Control.Feedback>
-        </Form.Group>  
-
-        <Form.Group controlId="accountPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control 
-          type="text"
-          name="password"
-          value={accountForm.password}
-          onChange={handleChange}
-          isInvalid={!!errors.password}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.password}
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <div>
-        <Button variant="primary" type="submit" disabled={submitting} className="me-2">
-          {submitting ? <Spinner as="span" animation="border" size="md"/>: 'Submit'}
-        </Button>
-
-        <Button variant="secondary" onClick={() => navigate(`/customer-account-form`)} className="me-2">
-          Create Account
-        </Button>
-
-        <Button variant="warning" onClick={() => navigate(`/`)} className="me-2">
-          Skip
-        </Button>
-        </div>
-
-
-      </Form>
+                <Button variant="warning" onClick={() => navigate(`/`)} className="me-2">
+                  Skip
+                </Button>
+                </div>
+              </Row>
+            </Col>
+          </Form>
+        </Row>
+      </Col>
 
       <Modal show={showSuccessModal} onHide={handleClose}>
 
@@ -134,7 +140,7 @@ const SignIn = () => {
       </Modal>
 
       
-    </Container>
+    </>
   );
 };
 

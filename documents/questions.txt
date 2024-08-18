@@ -54,7 +54,7 @@ stock replenishment is efficient and timely.
 
 
 
-Order Processing:  
+Order Processing: DONE
 Develop React components and functionality for efficient handling of customer orders:
 Place Order Form: Create a form component for customers to place new orders, specifying the products they wish to purchase and providing 
 essential order details. Each order should capture the order date and the associated customer.
@@ -71,7 +71,7 @@ Calculate Order Total Price (Bonus):  DONE
 Include a component that calculates the total price of items in a specific order, considering the prices of the products included in the order. 
 This calculation should be specific to each customer and each order, providing accurate pricing information.
 
-Component Creation and Organization: dDONE
+Component Creation and Organization: DONE
 Create either functional or class components to build the user interface of the e-commerce application. Organize components into a logical 
 folder structure for better code organization and maintainability. Use React hooks such as useState, useEffect, and useContext as appropriate 
 to manage component state and side effects.

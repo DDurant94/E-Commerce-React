@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
-import { array } from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
-const CustomerAccountsList = ({accounts}) => {
+const CustomerAccountsList = () => {
   const navigate = useNavigate();
+  const [accounts,setAccounts] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const deleteCustomerAccount = async (id) => {
@@ -27,7 +27,7 @@ const CustomerAccountsList = ({accounts}) => {
     const fetchCustomersAccount = async () => {
       try{
         const responseCustomersAccount = await axios.get('http://127.0.0.1:5000/customer_accounts');
-        accounts = [responseCustomersAccount.data];
+        setAccounts(responseCustomersAccount.data);
       } catch(error){
         console.error('Error fetching customers account:', error)
       }
@@ -37,29 +37,37 @@ const CustomerAccountsList = ({accounts}) => {
 
   return (
 
-    <Container>
+    <>
 
-      <Row>
+      <Col className="m-2  p-3 rounded">
 
-        <Col>
+        <Row className="bg-info p-3 rounded">
           <h3>Customer Accounts:</h3>
-          <ListGroup>
+          <ListGroup className=" bg-primary my-3 p-3">
             {accounts.map(account => (
-              <ListGroupItem key={account.id} className="d-flex justify-content-between align-items-center">
+              <ListGroupItem key={account.id} className="d-flex justify-content-between align-items-center my-1 rounded">
                 Account ID: {account.id} <br />
                 Username: {account.username} <br />
                 <div>
-                  <Button variant="primary" onClick={() => navigate(`/customer-account-details/${account.customer_id}`)} className="me-2">Details</Button>
-                  <Button variant="warning" onClick={() => navigate(`/customer-account-form/${account.id}`)} className="me-2">Edit</Button>
-                  <Button variant="danger" onClick={() => deleteCustomerAccount(account.id)}>Delete</Button>
+                  <Col>
+                    <Row className="m-2">
+                      <Button variant="primary" onClick={() => navigate(`/customer-account-details/${account.customer_id}`)} className="me-2">Details</Button>
+                    </Row>
+                    <Row className="m-2">
+                      <Button variant="warning" onClick={() => navigate(`/customer-account-form/${account.id}`)} className="me-2">Edit</Button>
+                    </Row>
+                    <Row className="m-2">
+                      <Button variant="danger" onClick={() => deleteCustomerAccount(account.id)} className="me-2">Delete</Button>
+                    </Row>
+                  </Col>
                 </div>
               </ListGroupItem>))}
 
           </ListGroup>
 
-        </Col>
+        </Row>
 
-      </Row>
+      </Col>
 
       <Modal show={showSuccessModal} onHide={handleClose}>
 
@@ -79,13 +87,9 @@ const CustomerAccountsList = ({accounts}) => {
 
       </Modal>
 
-    </Container>
+    </>
   );
 };
-
-CustomerAccountsList.propTypes = {
-  accounts: array
-}
 
 export default CustomerAccountsList;
 

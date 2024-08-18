@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
-import { array,object } from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
 
@@ -44,38 +43,56 @@ const CartsList = () => {
 
     <>
 
-    <Row>
+    <Col className="m-2  p-3 rounded">
 
-      <Col>
-        <h2>Carts:</h2>
-        <Container>
+      <Row className="bg-info p-3 rounded">
+        <h2 className="text-center mb-2">Carts:</h2>
+        <Container className="p-1">
           {Object.keys(carts).map(customerId => (
-          <ListGroup key={customerId}>
-          <h3>Customer ID: {customerId}</h3>
+          <ListGroup key={customerId} className=" bg-primary my-3 p-4">
+          <h3 className="bg-black text-white p-2 rounded mx-1">Customer ID: {customerId}</h3>
           {carts[customerId].map((cart, index) => (
-            <ListGroupItem key={index}>
+            <ListGroupItem key={index} className="rounded m-1">
               <h4>Cart ID: {cart.cart_id}</h4>
               <ListGroup>
                 {cart.items.map(item => (
-                  <ListGroupItem key={item.product_id} className="d-flex justify-content-between align-items-center">
-                    Product ID: {item.product_id} <br /> 
-                    Name: {item.name} <br /> 
-                    Price: {item.price} <br />
-                    Quantity: {item.quantity} <br />
+                  <ListGroupItem key={item.product_id} className="d-flex justify-content-between align-items-center my-1">
+                    <Col>
+                      <Row className="p-2">
+                        <div className="">
+                          Product ID: {item.product_id}
+                        </div>
+                      </Row>
+                      <Row className="p-2">
+                        <div className="">
+                          Name: {item.name} 
+                        </div>
+                      </Row>
+                      <Row className="p-2">
+                        <div className="">
+                          Quantity: {item.quantity}
+                        </div>
+                      </Row>
                     <div>
-                      <Button variant="primary" onClick={() => navigate(`/cart-details/${customerId}`)} className="me-2">Details</Button>
-                      <Button variant="warning" onClick={() => navigate(`/cart-form/${cart.cart_id}`)} className="me-2">Edit</Button>
-                      <Button variant="danger" onClick={() => deleteCart(cart.cart_id)} className="me-2">Delete</Button>
+                      <Col className="d-flex justify-content-between align-items-center">
+                        <Row className="m-2">
+                          <Button variant="primary" onClick={() => navigate(`/cart-details/${customerId}`)} className="me-2">Details</Button>
+                        </Row>
+                        <Row className="m-2">
+                          <Button variant="danger" onClick={() => deleteCart(cart.cart_id)} className="me-2">Delete</Button>
+                        </Row>
+                      </Col>
                     </div>
+                    </Col>
                   </ListGroupItem>))}
               </ListGroup>
             </ListGroupItem>))}
           </ListGroup>))}
         </Container>
 
-      </Col>
+      </Row>
 
-    </Row>
+    </Col>
 
     <Modal show={showSuccessModal} onHide={handleClose}>
 
