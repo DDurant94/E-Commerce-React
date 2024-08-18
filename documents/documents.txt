@@ -1,13 +1,61 @@
 About:
+  E-Commerce is a webpage built with React Vite. It offers a smooth and dynamic user interface (UI). E-Commerce features a catalog, 
+  customer creation, account creation, order management, and cart management. These functionalities are available from a customer perspective 
+  and include admin capabilities for editing and manual input across different pages. The catalog also integrates a low stock warning, 
+  so customers know when to order a product before it runs out.
 
 Details:
+  Font-end:
+    This webpage uses React Vite coupled with Python, Flask, MySQL, SQLAlchemy, and CORS for the back-end API, and React DOM, Axios, and Bootstrap 
+    for the front end. These technologies work together to create a scalable and dynamic webpage. API calls are made using async functions to 
+    avoid ‘callback hell.’ Bootstrap styles the page with component positioning for a cleaner look. React DOM handles the state of components, 
+    ensuring a dynamic feel and smooth page loading, updating only the necessary parts without reloading the entire page.
+
+  Back-end:
+    The API used for this project is connected to the front end via CORS, ensuring smooth and fast data transfer between the front end 
+    and back end. The lightweight MySQL database allows information to be safely stored and retrieved for display within React. If you want to 
+    learn more about the API, please see the link in the README for detailed information.
 
 Dependencies:
-  Front-End (React):
+  -axios: ^1.7.3
+  -bootstrap: ^5.3.3
+  -bootstrap-icons: ^1.11.3
+  -prop-types: ^15.8.1
+  -react: "^18.3.1
+  -react-bootstrap: 2.10.4
+  -react-dom: ^18.3.1
+  -react-router-dom: ^6.26.0
 
   Back-end (Flask Python):
+    PIP Installs:
+    blinker 1.8.2
+    click 8.1.7
+    colorama 0.4.6
+    Flask 3.0.3
+    flask-marshmallow 1.2.1
+    Flask-SQLAlchemy 3.1.1
+    flask-Cors 4.0.1
+    greenlet 3.0.3
+    itsdangerous 2.2.0
+    Jinja2 3.1.4
+    MarkupSafe 2.1.5
+    marshmallow 3.21.2
+    mysql-connector-python 8.4.0
+    packaging 24.0
+    pip 24.0
+    SQLAlchemy 2.0.30
+    typing_extensions 4.11.0
+    Werkzeug 3.0.3
 
-Extensions Used:
+Extensions:
+  -Simple React Snippets
+  -ES7+ React/Redux/React-Native snippets
+  -React Bootstrap 4 Snippets
+  -Bootstrap 5 & Font Awesome Snippets
+  -Bootstrap 5 Quick Snippet
+  -Bootstrap 4, Font awesome 4, Font Awesome 5 Free & Pro snippets
+  -Simple React Snippets
+  -Postman
 
 
 Project Requirements:
