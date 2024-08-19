@@ -1,8 +1,8 @@
-import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal, Form,Spinner,Alert} from "react-bootstrap";
+import  { Button, Row, Col, ListGroup, ListGroupItem, Modal, Form,Spinner,Alert} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { object,func } from "prop-types";
+import { object} from "prop-types";
 
 const ProductDetails = ({params}) => {
   const [product, setProduct] = useState([]);

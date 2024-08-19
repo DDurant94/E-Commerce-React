@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
-import  { Container, Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
+import  { Button, Row, Col, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const CustomerAccountsList = () => {

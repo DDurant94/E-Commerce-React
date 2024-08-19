@@ -20,9 +20,8 @@ import NotFound from './components/Page-Components/ErrorPage';
 import './components/Styles-component/Styles.css'
 
 // general imports
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect, React} from 'react';
+import { React} from 'react';
 import { Routes,Route, } from "react-router-dom";
 import { object } from 'prop-types';
 
