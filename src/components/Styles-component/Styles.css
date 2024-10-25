@@ -9,7 +9,7 @@
 }
 
 #nav-links{
-  color: rgba(0, 0, 255, 0.599);
+  color: white;
 }
 
 #basic-nav-dropdown:hover{
@@ -20,5 +20,5 @@
 }
 
 #basic-nav-dropdown{
-  color: rgba(0, 0, 255, 0.599);
+  color: white;
 }
