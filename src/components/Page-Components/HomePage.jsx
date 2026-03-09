@@ -10,7 +10,8 @@ const HomePage = () => {
         <div>
           <h1>E-Commerce</h1>
           <p>Welcome to E-Commerce where you can shop till you drop!</p>
-            <Nav.Link to="/sign-in" as={Link} className="nav-link mb-5" id="error-home-page"><Button variant="primary">Sign-In</Button></Nav.Link>
+          <p className="text-danger">The API for this website is Disabled and not running. Users Can not Sign-in, Add, Delete or Search products. I am sorry for the inconvenience. -Daniel Durant</p>
+            <Nav.Link to="/sign-in" as={Link} className="nav-link mb-5" id="error-home-page"><Button variant="primary" disabled={true}>Sign-In</Button></Nav.Link>
              
         </div>
       </header>
